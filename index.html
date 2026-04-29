@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Surprise For You</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap');
+
+        :root {
+            --bg-pink: #ffd1dc;
+            --text-dark-pink: #c74b68;
+            --button-pink: #ffb6c1;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-pink);
+            color: var(--text-dark-pink);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px; /* Perfect for iPhone */
+            padding: 20px;
+            display: none; /* Hidden by default, JS controls this */
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 {
+            margin-bottom: 15px;
+            color: var(--text-dark-pink);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Images / Emojis */
+        .main-img {
+            font-size: 5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Buttons */
+        button {
+            background-color: var(--button-pink);
+            color: var(--white);
+            border: none;
+            border-radius: 20px;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 5px;
+            box-shadow: 0 4px 6px rgba(255, 182, 193, 0.5);
+            transition: transform 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .home-btn {
+            background-color: transparent;
+            color: var(--text-dark-pink);
+            font-size: 2rem;
+            margin-top: 20px;
+            box-shadow: none;
+        }
+
+        /* Menu Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px 10px;
+            font-size: 3rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Specific Page Styles */
+        .letter-content {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .polaroid {
+            background: white;
+            padding: 10px 10px 30px 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: 80%;
+            transform: rotate(-2deg);
+        }
+        .polaroid:nth-child(even) { transform: rotate(3deg); }
+        .polaroid-img {
+            background: #eee;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+        }
+
+        .bouquet-note {
+            background: var(--white);
+            padding: 10px;
+            border-radius: 15px;
+            margin: 5px;
+            font-size: 0.9rem;
+            border: 2px solid var(--button-pink);
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid var(--button-pink);
+            width: 80%;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        input:focus { outline: none; border-color: var(--text-dark-pink); }
+    </style>
+</head>
+<body>
+
+    <div id="landing" class="container active">
+        <div class="main-img">🐱💕</div>
+        <h2>Hey beautiful</h2>
+        <h1>Do you want to see your gift?</h1>
+        <div class="btn-group">
+            <button onclick="goTo('menu')">YES PLEASE</button>
+            <button onclick="noThanks()">NO THANKS</button>
+        </div>
+    </div>
+
+    <div id="menu" class="container">
+        <h2>Made just for you</h2>
+        <p>Tap a card to open your surprise ✨</p>
+        <div class="grid">
+            <div class="card" onclick="goTo('memories')">📸</div>
+            <div class="card" onclick="goTo('letter')">✉️</div>
+            <div class="card" onclick="goTo('unlock')">🎀</div>
+            <div class="card" onclick="goTo('bouquet')">💐</div>
+        </div>
+    </div>
+
+    <div id="memories" class="container">
+        <h2>Captured Memories</h2>
+        <div class="polaroid">
+            <div class="polaroid-img">Your Pic Here</div>
+        </div>
+        <div class="polaroid">
+            <div class="polaroid-img">Your Pic Here</div>
+        </div>
+        <button class="home-btn" onclick="goTo('menu')">🏠</button>
+    </div>
+
+    <div id="letter" class="container">
+        <div class="letter-content">
+            <h2>My Love,</h2>
+            <p>I feel so lucky to walk through life with you by my side. Even the smallest moments feel special with you.</p>
+            <p>I hope this brings you peace, joy, and everything your heart quietly wishes for.</p>
+            <p>You deserve so much more than you realize.</p>
+            <p style="text-align: right; font-weight: bold;">With all my love,<br>- Me</p>
+        </div>
+        <button class="home-btn" onclick="goTo('menu')">🏠</button>
+    </div>
+
+    <div id="bouquet" class="container">
+        <h2>A Bouquet Just for You</h2>
+        <div class="main-img">💐</div>
+        <div class="bouquet-note">Every day with you feels like a blessing</div>
+        <div class="bouquet-note">Your smile is my favorite place</div>
+        <div class="bouquet-note">Loving you is the easiest thing I've ever done</div>
+        <div class="bouquet-note">With you, everything feels right</div>
+        <button class="home-btn" onclick="goTo('menu')">🏠</button>
+    </div>
+
+    <div id="unlock" class="container">
+        <div class="main-img">🎀🐱</div>
+        <h2>One last surprise...</h2>
+        <p>Type your name to unlock the final surprise</p>
+        <input type="text" id="partnerName" placeholder="Enter name...">
+        <button onclick="checkName()">UNLOCK</button>
+        <button class="home-btn" onclick="goTo('menu')">🏠</button>
+    </div>
+
+    <div id="future" class="container">
+        <h2>Our Future Plans</h2>
+        <div class="grid" style="grid-template-columns: 1fr;">
+            <div class="bouquet-note">
+                <h3>The First Hug</h3>
+                <p>No more screens. Just you and me.</p>
+            </div>
+            <div class="bouquet-note">
+                <h3>Our Little Home</h3>
+                <p>Slow mornings. Late-night talks.</p>
+            </div>
+            <div class="bouquet-note">
+                <h3>Side by Side</h3>
+                <p>New places. Same love.</p>
+            </div>
+        </div>
+        <button class="home-btn" onclick="goTo('menu')">🏠</button>
+    </div>
+
+    <script>
+        // Function to switch between pages
+        function goTo(pageId) {
+            // Hide all containers
+            const containers = document.querySelectorAll('.container');
+            containers.forEach(container => {
+                container.classList.remove('active');
+            });
+
+            // Show the requested container
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // Cute alert for the "No Thanks" button
+        function noThanks() {
+            alert("Oops! That button is broken. You HAVE to say yes! 🥺");
+        }
+
+        // Function for the final unlock screen
+        function checkName() {
+            const nameInput = document.getElementById('partnerName').value.trim();
+            if (nameInput !== "") {
+                goTo('future');
+            } else {
+                alert("Please enter your name beautiful! 💕");
+            }
+        }
+    </script>
+</body>
+</html>
